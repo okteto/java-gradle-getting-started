@@ -48,7 +48,7 @@ okteto>
 
 The `okteto up` command will automatically start an ephemeral development environment, which means:
 
-- The Java Sample App container is updated with the docker image `gradle:5.1-jdk11`. This image contains the required dev tools to build, test and run the Java Sample App. Enjoy the advantages of having development environments as code.
+- The Java Sample App container is updated with the docker image `gradle`. This image contains the required dev tools to build, test and run the Java Sample App. Enjoy the advantages of having development environments as code.
 - Create a bidirectional file synchronization service to keep your changes up-to-date between your local filesystem and your remote containers. Moving diff of code through the internet is way faster than moving Docker layers.
 - Forward the container ports 8080 (the application) and 8088 (the debugger) to localhost.
 - Start a terminal into the remote container. Build, test and run your application as if you were in your local machine.
