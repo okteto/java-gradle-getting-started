@@ -1,8 +1,8 @@
-FROM gradle:5.1-jdk11 as builder
+FROM gradle as builder
 COPY --chown=gradle:gradle . .
 RUN gradle build
 
-FROM openjdk:11-jre-slim
+FROM openjdk:8-jre
 EXPOSE 8080
 WORKDIR /app
 COPY --from=builder /home/gradle/build/libs/*.jar .

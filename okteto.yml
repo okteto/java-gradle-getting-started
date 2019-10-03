@@ -1,12 +1,8 @@
 name: hello-world
-image: gradle:5.1-jdk11
+image: gradle
 command: ["bash"]
 volumes:
   - /home/gradle/.gradle/caches
 forward:
   - 8080:8080
   - 8088:8088
-resources:
-  limits:
-    memory: "4Gi"
-    cpu: "2"
