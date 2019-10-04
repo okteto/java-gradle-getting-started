@@ -32,6 +32,5 @@ dependencies {
 }
 
 bootRun {
-    jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8088"]
     classpath = sourceSets.main.runtimeClasspath + configurations.dev
 }

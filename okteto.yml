@@ -1,6 +1,13 @@
 name: hello-world
-image: gradle
-command: ["bash"]
+image: okteto/gradle:latest
+securityContext:
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+command:
+  - bash
+environment:
+  - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8088
 volumes:
   - /home/gradle/.gradle
 forward:

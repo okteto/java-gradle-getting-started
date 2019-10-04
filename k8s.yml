@@ -12,9 +12,6 @@ spec:
       labels:
         app: hello-world
     spec:
-      securityContext:
-        runAsUser: 1000
-        fsGroup: 1000
       terminationGracePeriodSeconds: 0
       containers:
       - name: api
