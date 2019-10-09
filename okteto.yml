@@ -1,9 +1,5 @@
 name: hello-world
 image: gradle:latest
-securityContext:
-  runAsUser: 1000
-  runAsGroup: 1000
-  fsGroup: 1000
 command:
   - bash
 environment:

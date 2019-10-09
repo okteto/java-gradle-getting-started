@@ -1,5 +1,5 @@
 FROM gradle as builder
-COPY --chown=gradle:gradle . .
+COPY . .
 RUN gradle build
 
 FROM openjdk:8-jre
