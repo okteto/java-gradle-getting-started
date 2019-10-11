@@ -64,7 +64,7 @@ To run the application, execute in the Okteto terminal:
 okteto> gradle bootRun
 ```
 
-The first time you run the application, Gradle will download your dependencies and comile your application. Wait for this proccess to finish and test your application by running the command below in a local terminal:
+The first time you run the application, Gradle will download your dependencies and compile your application. Wait for this proccess to finish and test your application by running the command below in a local terminal:
 
 ```console
 $ curl localhost:8080
