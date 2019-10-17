@@ -2,11 +2,12 @@
 
 This example shows how to leverage [Okteto](https://github.com/okteto/okteto) to develop a Java Sample App directly in Kubernetes. The Java Sample App is deployed using raw Kubernetes manifests.
 
-Okteto works in any Kubernetes cluster by reading your local kubeconfig file. If you need easy access to a Kubernetes cluster, [Okteto Cloud](https://cloud.okteto.com) gives you free access to 4CPUs and 8Gb virtual Kubernetes clusters.
+Okteto works in any Kubernetes cluster by reading your local kubeconfig file. If you need access to a Kubernetes cluster, [Okteto Cloud](https://cloud.okteto.com) gives you free access to secure Kubernetes namespaces, compatible with any Kubernetes tool.
+
 
 ## Step 1: Deploy the Java Sample App
 
-Get a local version of the Java Sample App by executing the following commands in your local terminal:
+Get a local version of the Java Sample App by executing the following commands:
 
 ```console
 $ git clone https://github.com/okteto/java-gradle-getting-started
@@ -24,20 +25,19 @@ deployment.apps "hello-world" created
 service "hello-world" created
 ```
 
-This is cool! You typed one command and your application just runs 😎. 
+This is cool! You typed one command and a dev version of your application just runs 😎. 
 
 ## Step 2: Start your development environment in Kubernetes
 
-With the Java Sample Application deployed, run the following command in your local terminal:
+With the Java Sample Application deployed, run the following command:
 
 ```console
 $ okteto up
 ```
 
 ```console
- ✓  Persistent volume provisioned
+ ✓  Development environment activated
  ✓  Files synchronized
- ✓  Okteto Environment activated
     Namespace: pchico83
     Name:      hello-world
     Forward:   8080 -> 8080
@@ -50,21 +50,20 @@ The `okteto up` command starts a [Kubernetes development environment](https://ok
 
 - The Java Sample App container is updated with the Docker image `gradle:latest`. This image contains the required dev tools to build, test and run a Java application.
 - A [file synchronization service](https://okteto.com/docs/reference/file-synchronization/index.html) is created to keep your changes up-to-date between your local filesystem and your application pods.
-- Inject the `JAVA_OPTS` environment variable to automatically run the Java application in debug mode.
 - Attach a volume to persist the Gradle cache in your Kubernetes development environment.
 - Container ports 8080 (the application) and 8088 (the debugger) are forwarded to localhost.
-- Start a terminal into the remote container. Build, test and run your application as if you were in your local machine and get your application logs immediately in your terminal.
+- You have a remote shell in the development environment. Build, test and run your application as if you were in your local machine.
 
-All of this (and more) can be customized via the `okteto.yml` [manifest file](https://okteto.com/docs/reference/manifest/index.html).
+> All of this (and more) can be customized via the `okteto.yml` [manifest file](https://okteto.com/docs/reference/manifest/index.html).
 
 
-To run the application, execute in the Okteto terminal:
+To run the application, execute in the remote shell:
 
 ```console
 okteto> gradle bootRun
 ```
 
-The first time you run the application, Gradle will download your dependencies and compile your application. Wait for this proccess to finish and test your application by running the command below in a local terminal:
+The first time you run the application, Gradle will download your dependencies and compile your application. Wait for this proccess to finish and test your application by running the command below in a local shell:
 
 ```console
 $ curl localhost:8080
@@ -94,7 +93,7 @@ public class RestHelloWorld {
 }
 ```
 
-Your IDE will auto compile only the necessary `*.class` files which will be synchronized by Okteto to your application in Kubernetes. Take a look at the Okteto terminal and notice how the changes are detected by Spring Boot and automatically hot reloaded. To enable Spring Boot hot reloads you need to import the `spring-boot-devtools` dependency in your application: 
+Your IDE will auto compile only the necessary `*.class` files which will be synchronized by Okteto to your application in Kubernetes. Take a look at the remote shell and notice how the changes are detected by Spring Boot and automatically hot reloaded. To enable Spring Boot hot reloads you need to import the `spring-boot-devtools` dependency in your application: 
 
 ```console
 dependencies {
@@ -120,7 +119,7 @@ Cool! Your code changes were instantly applied to Kubernetes. No commit, build o
 
 Okteto enables you to debug your applications directly from your favorite IDE. Let's take a look at how that works in Eclipse, one of the most popular IDEs for Java development.
 
-Open the _Debug configuration_  dialog, add a new Remote Java Application debug configuration, and point it to `localhost:8088`. Click the Debug button to start debugging. Add a breakpoint on `src/main/java/es/okteto/helloworld/RestHelloWorld.java`, line 11, and call your application by running the command below from your local terminal.
+Open the _Debug configuration_  dialog, add a new Remote Java Application debug configuration, and point it to `localhost:8088`. Click the Debug button to start debugging. Add a breakpoint on `src/main/java/es/okteto/helloworld/RestHelloWorld.java`, line 11, and call your application by running the command below from a local shell.
 
 ```console
 $ curl localhost:8080
@@ -134,8 +133,7 @@ Cancel the `okteto up` command by pressing `ctrl + c` + `ctrl + d` and run the f
 
 ```console
 $ okteto down
- ✓  Okteto Environment deactivated
- ✓  Persistent volume deleted
+ ✓  Development environment deactivated
 ```
 
 ```console
