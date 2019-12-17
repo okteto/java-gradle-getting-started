@@ -1,7 +1,6 @@
 name: hello-world
 image: gradle:latest
-command:
-  - bash
+command: ["bash"]
 volumes:
   - /home/gradle/.gradle
 forward:
