@@ -1,9 +1,10 @@
-FROM gradle as builder
-COPY . .
+FROM gradle AS dev
+WORKDIR /code
+COPY . /code/
 RUN gradle build
 
-FROM openjdk:8-jre
+FROM openjdk:8-jre AS prod
 EXPOSE 8080
 WORKDIR /app
-COPY --from=builder /home/gradle/build/libs/*.jar .
+COPY --from=dev /home/gradle/build/libs/*.jar .
 CMD java -jar *.jar
