@@ -3,7 +3,7 @@ services:
   api:
     public: true
     image: okteto/hello-world:java-gradle
-    build: 1
+    build: .
     ports:
       - 8080
     
