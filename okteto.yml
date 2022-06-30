@@ -1,18 +1,13 @@
-name: java-gradle-getting-started
 build:
-  java-gradle-getting-started:
+  hello-world:
+    image: okteto.dev/java-gradle-hello-world:1.0.0
     context: .
-    dockerfile: Dockerfile
 deploy:
   - kubectl apply -f k8s.yml
 dev:
-  java-gradle-getting-started:
-    image: okteto/hello-world:java-gradle
-    command: bash
-    workdir: /usr/src/app
+  hello-world:
+    command: java -jar *.jar
     sync:
       - .:/usr/src/app
-    environment:
-      - name=$USER
     forward:
       - 8080:8080
