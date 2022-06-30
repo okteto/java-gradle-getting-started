@@ -1,13 +1,15 @@
 build:
   hello-world:
-    image: okteto.dev/java-gradle-hello-world:1.0.0
+    image: okteto/gradle:6.5
     context: .
 deploy:
   - kubectl apply -f k8s.yml
 dev:
   hello-world:
-    command: java -jar *.jar
+    command: bash
     sync:
       - .:/usr/src/app
     forward:
-      - 8080:8080
+      - 5005:5005
+  volumes:
+    - /home/gradle/.gradle
