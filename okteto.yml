@@ -1,11 +1,12 @@
 build:
   hello-world:
-    image: okteto/gradle:6.5
+    image: okteto.dev/java-gradle-hello-world:1.0.0
     context: .
 deploy:
   - kubectl apply -f k8s.yml
 dev:
   hello-world:
+    image: okteto/gradle:6.5
     command: bash
     sync:
       - .:/usr/src/app
