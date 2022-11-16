@@ -1,4 +1,4 @@
-FROM gradle AS build
+FROM gradle:6.5 AS build
 WORKDIR /code
 COPY . /code/
 RUN gradle build
