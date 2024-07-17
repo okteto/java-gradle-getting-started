@@ -2,7 +2,7 @@ deploy:
   - kubectl apply -f k8s.yml
 dev:
   hello-world:
-    image: okteto/gradle:6.5
+    image: okteto/gradle:8.1.1
     command: bash
     sync:
       - .:/usr/src/app
