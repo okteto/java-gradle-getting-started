@@ -1,9 +1,9 @@
-FROM gradle:6.5 AS build
+FROM gradle:9.9.1-jdk25 AS build
 WORKDIR /code
 COPY . /code/
 RUN gradle build
 
-FROM openjdk:8-jre
+FROM eclipse-temurin:25-jre
 EXPOSE 8080
 WORKDIR /app
 COPY --from=build /code/build/libs/*.jar .
