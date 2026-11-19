@@ -4,13 +4,6 @@ plugins {
     id 'idea'
     id 'org.springframework.boot' version '4.1.2'
     id 'io.spring.dependency-management' version '1.1.7'
-    id 'com.google.cloud.tools.jib' version '3.5.4'
-}
-
-sourceSets {
-  main {
-    java.destinationDirectory = file('bin/main')
-  }
 }
 
 repositories {
@@ -22,15 +15,19 @@ java {
     targetCompatibility = JavaVersion.VERSION_25
 }
 
-configurations {
-    dev
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-webmvc")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-actuator")
-    dev("org.springframework.boot:spring-boot-devtools")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
 }
 
 jar {
@@ -38,6 +35,5 @@ jar {
 }
 
 bootRun {
-    jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
-    classpath = sourceSets.main.runtimeClasspath + configurations.dev
+    jvmArgs = ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"]
 }
