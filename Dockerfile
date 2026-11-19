@@ -1,10 +1,13 @@
-FROM gradle:9.9.1-jdk25 AS build
-WORKDIR /code
-COPY . /code/
-RUN gradle build
+FROM eclipse-temurin:25.0.5_8-jdk-resolute AS dev
 
-FROM eclipse-temurin:25-jre
-EXPOSE 8080
-WORKDIR /app
-COPY --from=build /code/build/libs/*.jar .
-CMD java -jar *.jar
+WORKDIR /usr/src/app
+COPY gradlew settings.gradle build.gradle ./
+COPY gradle gradle
+RUN ./gradlew --no-daemon dependencies
+COPY . .
+RUN ./gradlew --no-daemon assemble
+
+FROM eclipse-temurin:25.0.5_8-jre-resolute AS prod
+
+COPY --from=dev /usr/src/app/build/libs/helloworld.jar /usr/local/lib/hello-world.jar
+CMD ["java", "-jar", "/usr/local/lib/hello-world.jar"]
