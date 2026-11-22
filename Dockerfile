@@ -1,11 +1,13 @@
 FROM eclipse-temurin:25.0.5_8-jdk-resolute AS dev
 
 WORKDIR /usr/src/app
-COPY gradlew settings.gradle build.gradle ./
-COPY gradle gradle
-RUN ./gradlew --no-daemon dependencies
 COPY . .
-RUN ./gradlew --no-daemon assemble
+
+# The cache mount keeps the Gradle home, with the Gradle distribution and the
+# dependencies, in the Okteto Build Service, which reuses it between builds.
+# The tests of the Okteto Manifest use the same cache
+RUN --mount=type=cache,target=/root/.gradle \
+    ./gradlew --no-daemon assemble
 
 FROM eclipse-temurin:25.0.5_8-jre-resolute AS prod
 
